@@ -1,58 +1,57 @@
-package ru.ext.webtest;
+package ru.ext.webtest.appmanager;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import ru.ext.webtest.model.Contact;
+import ru.ext.webtest.model.Group;
 
 import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-public class TestBase {
+public class ApplicationManager {
     private WebDriver driver;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
-    @BeforeClass(alwaysRun = true)
-    public void setUp() throws Exception {
-      driver = new FirefoxDriver();
-      driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    public void init() {
+        driver = new FirefoxDriver();
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
-      openMainPage();
-      login("admin", "secret");
+        openMainPage();
+        login("admin", "secret");
     }
 
-    protected void openMainPage() {
+    public void openMainPage() {
       driver.get("http://localhost/addressbook/");
     }
 
-    protected void clickDeleteGroupButton() {
+    public void clickDeleteGroupButton() {
       driver.findElement(By.xpath("(//input[@name='delete'])[2]")).click();
     }
 
-    protected void selectFirstGroup() {
+    public void selectFirstGroup() {
       driver.findElement(By.name("selected[]")).click();
     }
 
-    protected void confirmContactDeleteAlert() {
+    public void confirmContactDeleteAlert() {
       assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
     }
 
-    protected void clickDeleteContactButton() {
+    public void clickDeleteContactButton() {
       driver.findElement(By.xpath("//input[@value='Delete']")).click();
     }
 
-    protected void selectFirstContact() {
+    public void selectFirstContact() {
       driver.findElement(By.xpath("//table[@id='maintable']/tbody/tr[2]/td/input")).click();
     }
 
-    protected void submitContactData() {
+    public void submitContactData() {
       driver.findElement(By.name("submit")).click();
     }
 
-    protected void inputNewContactData(Contact contact) {
+    public void inputNewContactData(Contact contact) {
       driver.findElement(By.name("firstname")).click();
       driver.findElement(By.name("firstname")).clear();
       driver.findElement(By.name("firstname")).sendKeys(contact.getFirstname());
@@ -76,19 +75,19 @@ public class TestBase {
       driver.findElement(By.name("theform")).click();
     }
 
-    protected void openContactCreationPage() {
+    public void openContactCreationPage() {
       driver.findElement(By.linkText("add new")).click();
     }
 
-    protected void returnToGroupPage() {
+    public void returnToGroupPage() {
       driver.findElement(By.linkText("group page")).click();
     }
 
-    protected void clickEnterInformationButton() {
+    public void clickEnterInformationButton() {
       driver.findElement(By.name("submit")).click();
     }
 
-    protected void inputNewGroupInfo(Group group) {
+    public void inputNewGroupInfo(Group group) {
       driver.findElement(By.name("group_name")).click();
       driver.findElement(By.name("group_name")).clear();
       driver.findElement(By.name("group_name")).sendKeys(group.getGroupName());
@@ -100,29 +99,33 @@ public class TestBase {
       driver.findElement(By.name("group_footer")).sendKeys(group.getGroupFooter());
     }
 
-    protected void clickNewGroupButton() {
+    public void clickNewGroupButton() {
       driver.findElement(By.name("new")).click();
     }
 
-    protected void openGroupPage() {
+    public void openGroupPage() {
       driver.findElement(By.linkText("groups")).click();
     }
 
-    private void login(String username, String password) {
+    public void login(String username, String password) {
       driver.findElement(By.name("user")).clear();
       driver.findElement(By.name("user")).sendKeys(username);
       driver.findElement(By.name("pass")).clear();
       driver.findElement(By.name("pass")).sendKeys(password);
       driver.findElement(By.id("LoginForm")).submit();
+        try {
+            Thread.sleep(500);//ожидание прогрузки главной страницы после отправки формы
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() throws Exception {
-      driver.quit();
-      String verificationErrorString = verificationErrors.toString();
-      if (!"".equals(verificationErrorString)) {
-        fail(verificationErrorString);
-      }
+    public void stop() {
+        driver.quit();
+        String verificationErrorString = verificationErrors.toString();
+        if (!"".equals(verificationErrorString)) {
+          fail(verificationErrorString);
+        }
     }
 
     private boolean isElementPresent(By by) {

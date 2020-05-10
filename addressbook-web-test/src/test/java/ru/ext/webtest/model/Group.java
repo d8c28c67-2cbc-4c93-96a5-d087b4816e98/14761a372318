@@ -1,4 +1,4 @@
-package ru.ext.webtest;
+package ru.ext.webtest.model;
 
 public class Group {
     private final String groupName;
