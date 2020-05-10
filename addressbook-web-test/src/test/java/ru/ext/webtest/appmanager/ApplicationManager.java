@@ -2,11 +2,9 @@ package ru.ext.webtest.appmanager;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import ru.ext.webtest.model.Contact;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 public class ApplicationManager {

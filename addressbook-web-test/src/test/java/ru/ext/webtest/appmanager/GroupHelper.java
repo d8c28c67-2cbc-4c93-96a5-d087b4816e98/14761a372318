@@ -4,44 +4,35 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.ext.webtest.model.Group;
 
-public class GroupHelper {
-    private WebDriver driver;
-    public GroupHelper() {
-    }
+public class GroupHelper extends HelperBase {
 
     public GroupHelper(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     public void clickDeleteGroupButton() {
-      driver.findElement(By.xpath("(//input[@name='delete'])[2]")).click();
+        click(By.xpath("(//input[@name='delete'])[2]"));
     }
 
     public void selectFirstGroup() {
-      driver.findElement(By.name("selected[]")).click();
+        click(By.name("selected[]"));
     }
 
     public void returnToGroupPage() {
-      driver.findElement(By.linkText("group page")).click();
+        click(By.linkText("group page"));
     }
 
     public void inputNewGroupInfo(Group group) {
-      driver.findElement(By.name("group_name")).click();
-      driver.findElement(By.name("group_name")).clear();
-      driver.findElement(By.name("group_name")).sendKeys(group.getGroupName());
-      driver.findElement(By.name("group_header")).click();
-      driver.findElement(By.name("group_header")).clear();
-      driver.findElement(By.name("group_header")).sendKeys(group.getGroupHeader());
-      driver.findElement(By.name("group_footer")).click();
-      driver.findElement(By.name("group_footer")).clear();
-      driver.findElement(By.name("group_footer")).sendKeys(group.getGroupFooter());
+        type(By.name("group_name"), group.getGroupName());
+        type(By.name("group_header"), group.getGroupHeader());
+        type(By.name("group_footer"), group.getGroupFooter());
     }
 
     public void clickEnterInformationButton() {
-        driver.findElement(By.name("submit")).click();
+        click(By.name("submit"));
     }
 
     public void clickNewGroupButton() {
-      driver.findElement(By.name("new")).click();
+        click(By.name("new"));
     }
 }

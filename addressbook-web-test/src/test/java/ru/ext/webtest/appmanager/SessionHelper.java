@@ -3,22 +3,21 @@ package ru.ext.webtest.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class SessionHelper {
-    private WebDriver driver;
+public class SessionHelper extends HelperBase{
+
     public SessionHelper(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     public void login(String username, String password) {
-        driver.findElement(By.name("user")).clear();
-        driver.findElement(By.name("user")).sendKeys(username);
-        driver.findElement(By.name("pass")).clear();
-        driver.findElement(By.name("pass")).sendKeys(password);
-        driver.findElement(By.id("LoginForm")).submit();
+        type(By.name("user"), username);
+        type(By.name("pass"), password);
+        submitForm(By.id("LoginForm"));
         try {
-            Thread.sleep(500);//ожидание прогрузки главной страницы после отправки формы
+            Thread.sleep(1000);//ожидание прогрузки главной страницы после отправки формы
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
 }
