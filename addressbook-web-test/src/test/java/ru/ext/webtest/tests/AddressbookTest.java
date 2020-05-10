@@ -8,38 +8,38 @@ public class AddressbookTest extends TestBase {
 
   @Test
   public void createGroup() throws Exception {
-    app.openMainPage();
-    app.openGroupPage();
-    app.clickNewGroupButton();
-    app.inputNewGroupInfo(new Group("template", "123", "456"));
-    app.clickEnterInformationButton();
-    app.returnToGroupPage();
+    app.getNavigationHelper().openMainPage();
+    app.getNavigationHelper().openGroupPage();
+    app.getGroupHelper().clickNewGroupButton();
+    app.getGroupHelper().inputNewGroupInfo(new Group("template", "123", "456"));
+    app.getGroupHelper().clickEnterInformationButton();
+    app.getGroupHelper().returnToGroupPage();
   }
 
   @Test
   public void createContact() throws Exception {
-    app.openMainPage();
-    app.openContactCreationPage();
-    app.inputNewContactData(new Contact("Martin", "Huaman", "Survey No. 13, DivyaSree Omega\nKondapur Village\nHyderabad, Telangana 500084", "+1 536 882747", "mail@incl.org", "alt@iftrc.com"));
-    app.submitContactData();
-    app.openMainPage();
+    app.getNavigationHelper().openMainPage();
+    app.getNavigationHelper().openContactCreationPage();
+    app.getContactHelper().inputNewContactData(new Contact("Martin", "Huaman", "Survey No. 13, DivyaSree Omega\nKondapur Village\nHyderabad, Telangana 500084", "+1 536 882747", "mail@incl.org", "alt@iftrc.com"));
+    app.getContactHelper().submitContactData();
+    app.getNavigationHelper().openMainPage();
   }
 
   @Test
   public void deleteGroup() {
-    app.openMainPage();
-    app.openGroupPage();
-    app.selectFirstGroup();
-    app.clickDeleteGroupButton();
-    app.returnToGroupPage();
+    app.getNavigationHelper().openMainPage();
+    app.getNavigationHelper().openGroupPage();
+    app.getGroupHelper().selectFirstGroup();
+    app.getGroupHelper().clickDeleteGroupButton();
+    app.getGroupHelper().returnToGroupPage();
   }
 
   @Test
   public void deleteContact() {
-    app.openMainPage();
-    app.selectFirstContact();
-    app.clickDeleteContactButton();
-    app.confirmContactDeleteAlert();
+    app.getNavigationHelper().openMainPage();
+    app.getContactHelper().selectFirstContact();
+    app.getContactHelper().clickDeleteContactButton();
+    app.getContactHelper().confirmContactDeleteAlert();
   }
 
 }
